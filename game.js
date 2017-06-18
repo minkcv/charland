@@ -1,5 +1,5 @@
-var divcols = 4;
-var divrows = 4;
+var divcols = 32;
+var divrows = 32;
 var worldData = [];
 var worldDivs = [];
 var walls = [];
