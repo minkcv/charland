@@ -1,10 +1,24 @@
+var dummyPre = document.createElement("pre");
+dummyPre.style.fontFamily = "monospace";
+dummyPre.style.position= "absolute";
+dummyPre.style.margin = 0;
+dummyPre.style.display = "inline-block";
+var dummyA = document.createTextNode("A");
+dummyPre.appendChild(dummyA);
+document.body.appendChild(dummyPre);
+// What is 7.1 pixels? You can't render 0.1 pixels,
+// but if you have several elements next to each other
+// then the fractional amounts start to add up.
+// And this is why we can't just use dummyPre.clientWidth,
+// or dummyPre.offsetWidth, or dummyPre.scrollWidth.
+var tileWidth = dummyPre.getBoundingClientRect().width;
+var tileHeight = dummyPre.getBoundingClientRect().height;
+
 var divcols = 32;
 var divrows = 32;
 var worldData = [];
 var worldDivs = [];
 var walls = [];
-var tileWidth = 8;
-var tileHeight = 13;
 for (k = 0; k < worldLines.length / divrows; k++) {
 	worldData[k] = [];
 	for (i = 0; i < worldLines[k].length / divcols; i++) {
@@ -21,12 +35,11 @@ for (j = 0; j < worldData.length; j++) {
 		var d = document.createElement("pre");
 		d.style.position = "absolute";
 		d.style.position = "absolute";
-		d.style.lineHeight = 1;
 		d.style.fontFamily = "monospace";
 		d.style.color = "white";
 		d.style.margin = 0;
-		d.style.left = i * divcols * 8;
-		d.style.top = j * divrows * 13;
+		d.style.left = i * divcols * tileWidth;
+		d.style.top = j * divrows * tileHeight;
 		var txt = document.createTextNode(worldData[j][i]);
 		d.appendChild(txt);
 		document.body.appendChild(d);
