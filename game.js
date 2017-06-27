@@ -19,6 +19,9 @@ var divrows = 32;
 var worldData = [];
 var worldDivs = [];
 var walls = [];
+var gamestart = true;
+var playerstartx = 33 * tileWidth;
+var playerstarty = 110 * tileHeight;
 for (k = 0; k < worldLines.length / divrows; k++) {
 	worldData[k] = [];
 	for (i = 0; i < worldLines[k].length / divcols; i++) {
@@ -55,7 +58,8 @@ for (i = 0; i < worldLines.length; i++) {
 				left: j * tileWidth,
 				right: (j + 1) * tileWidth,
 				top: i * tileHeight,
-				bottom: (i + 1) * tileHeight };
+				bottom: (i + 1) * tileHeight
+            };
 	}
 }
 
@@ -176,6 +180,14 @@ setInterval(function() {
 
 	// Yay, side effects on global variables.
 	collisionDetection();
+
+    // Yet another hack because I can't just set playerx or playery
+    if (gamestart)
+    {
+        playerxv = playerstartx;
+        playeryv = playerstarty;
+        gamestart = false;
+    }
 
 	playerx += playerxv;
 	playery += playeryv;
