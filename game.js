@@ -124,22 +124,22 @@ function collisionDetection() {
 				if (intersects(leftRect, walls[i][j]) && playerxv < 0)
                 {
                     var leftRem = playerx - walls[i][j].right;
-                    playerxv = -leftRem;
+                    playerxv = -Math.floor(leftRem);
                 }
 				if (intersects(rightRect, walls[i][j]) && playerxv > 0)
                 {
                     var rightRem = walls[i][j].left - (playerx + playerw);
-					playerxv = rightRem;
+					playerxv = Math.floor(rightRem);
                 }
 				if (intersects(topRect, walls[i][j]) && playeryv < 0)
                 {
                     var topRem = playery - walls[i][j].bottom;
-					playeryv = -topRem;
+					playeryv = -Math.floor(topRem);
                 }
 				if (intersects(botRect, walls[i][j]) && playeryv > 0)
                 {
                     var botRem = walls[i][j].top - (playery + playerh);
-					playeryv = botRem;
+					playeryv = Math.floor(botRem);
                 }
 			}
 		}
