@@ -14,8 +14,12 @@ document.body.appendChild(dummyPre);
 var tileWidth = dummyPre.getBoundingClientRect().width;
 var tileHeight = dummyPre.getBoundingClientRect().height;
 
-var divcols = 32;
-var divrows = 32;
+var divcols = 64;
+var divrows = 64;
+if (worldLines.length % divrows != 0)
+	console.log("number of lines in the world must be a multiple of divrows (" + divrows + ")");
+if (worldLines[0].length % divrows != 0)
+	console.log("number of characters in a world line should be a multiple of divcols (" + divcols + ")");
 var worldData = [];
 var worldDivs = [];
 var walls = [];
