@@ -116,11 +116,27 @@ function collisionDetection() {
 			top: playery + playerh, 
 			bottom: playery + playerh + playeryv };
 
-	// Player corner rectangles. TODO
-	var topleftRect = { left: 0, right: 0, top: 0, bottom: 0 };
-	var botleftRect = { left: 0, right: 0, top: 0, bottom: 0 };
-	var toprightRect = { left: 0, right: 0, top: 0, bottom: 0 };
-	var botrightRect = { left: 0, right: 0, top: 0, bottom: 0 };
+	var topleftRect = { left: playerx + playerxv, 
+                        right: playerx + playerw + playerxv, 
+                        top: playery + playeryv, 
+                        bottom: playery };
+	var botleftRect = { left: playerx + playerxv,
+                        right: playerx + playerw + playerxv,
+                        top: playery + playerh,
+                        bottom: playery + playerh + playeryv };
+	var toprightRect = { left: playerx + playerw, 
+                         right: playerx + playerw + playerxv, 
+                         top: playery + playeryv, 
+                         bottom: playery };
+	var botrightRect = { left: playerx + playerw,
+                         right: playerx + playerw + playerxv, 
+                         top: playery + playerh, 
+                         bottom: playery + playerh + playeryv };
+
+    var leftIntersects = false;
+    var rightIntersects = false;
+    var topIntersects = false;
+    var botIntersects = false;
 
 	for (i = 0; i < walls.length; i++) {
 		for (j = 0; j < walls[i].length; j++) {
@@ -129,25 +145,65 @@ function collisionDetection() {
                 {
                     var leftRem = playerx - walls[i][j].right;
                     playerxv = -Math.floor(leftRem);
+                    leftIntersects = true;
                 }
-				if (intersects(rightRect, walls[i][j]) && playerxv > 0)
-                {
-                    var rightRem = walls[i][j].left - (playerx + playerw);
-					playerxv = Math.floor(rightRem);
-                }
-				if (intersects(topRect, walls[i][j]) && playeryv < 0)
+                if (intersects(topRect, walls[i][j]) && playeryv < 0)
                 {
                     var topRem = playery - walls[i][j].bottom;
 					playeryv = -Math.floor(topRem);
+                    topIntersects = true;
+                }
+
+                if (intersects(rightRect, walls[i][j]) && playerxv > 0)
+                {
+                    var rightRem = walls[i][j].left - (playerx + playerw);
+					playerxv = Math.floor(rightRem);
+                    rightIntersects = true;
                 }
 				if (intersects(botRect, walls[i][j]) && playeryv > 0)
                 {
                     var botRem = walls[i][j].top - (playery + playerh);
 					playeryv = Math.floor(botRem);
+                    botIntersects = true;
                 }
 			}
 		}
 	}
+
+	for (i = 0; i < walls.length; i++) {
+		for (j = 0; j < walls[i].length; j++) {
+			if (walls[i][j]) {
+                if (!leftIntersects && !topIntersects)
+                {
+                    if (intersects(topleftRect, walls[i][j]) && playerxv < 0 && playeryv < 0)
+                    {
+                        playeryv = 0;
+                    }
+                }
+                if (!leftIntersects && !botIntersects)
+                {
+                    if (intersects(botleftRect, walls[i][j]) && playerxv < 0 && playeryv > 0)
+                    {
+                        playeryv = 0;
+                    }
+                }
+                if (!topIntersects && !rightIntersects)
+                {
+                    if (intersects(toprightRect, walls[i][j]) && playerxv > 0 && playeryv < 0)
+                    {
+                        playeryv = 0;
+                    }
+                }
+                if (!botIntersects && !rightIntersects)
+                {
+                    if (intersects(botrightRect, walls[i][j]) && playerxv > 0 && playeryv > 0)
+                    {
+                        playeryv = 0;
+                    }
+                }
+            }
+        }
+    }
 }
 
 addEventListener("keydown", function(e) {
