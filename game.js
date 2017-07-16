@@ -24,8 +24,8 @@ var worldData = [];
 var worldDivs = [];
 var walls = [];
 var gamestart = true;
-var playerstartx = 220 * tileWidth;
-var playerstarty = 110 * tileHeight;
+var playerstartx = 341 * tileWidth;
+var playerstarty = 130 * tileHeight;
 for (k = 0; k < worldLines.length / divrows; k++) {
     worldData[k] = [];
     for (i = 0; i < worldLines[k].length / divcols; i++) {
@@ -244,8 +244,8 @@ setInterval(function() {
     // Yet another hack because I can't just set playerx or playery
     if (gamestart)
     {
-        playerxv = playerstartx;
-        playeryv = playerstarty;
+        playerxv = playerstartx - Math.floor(window.innerWidth / 2);
+        playeryv = playerstarty - Math.floor(window.innerHeight / 2);
         gamestart = false;
     }
 
