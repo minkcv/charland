@@ -207,10 +207,12 @@ function collisionDetection() {
 }
 
 addEventListener("keydown", function(e) {
+    e.preventDefault();
     keysDown[e.keyCode] = true;
 }, false);
 
 addEventListener("keyup", function(e) {
+    e.preventDefault();
     delete keysDown[e.keyCode];
 }, false);
 
