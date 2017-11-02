@@ -206,13 +206,17 @@ function collisionDetection() {
     }
 }
 
+var keys = { up: 38, down: 40, right: 39, left: 37 };
+
 addEventListener("keydown", function(e) {
-    e.preventDefault();
+    if (e.keyCode in keys)
+        e.preventDefault();
     keysDown[e.keyCode] = true;
 }, false);
 
 addEventListener("keyup", function(e) {
-    e.preventDefault();
+    if (e.keyCode in keys)
+        e.preventDefault();
     delete keysDown[e.keyCode];
 }, false);
 
@@ -223,18 +227,18 @@ addEventListener("resize", function() {
 });
 
 setInterval(function() {
-    if (38 in keysDown) { // UP
+    if (keys.up in keysDown) { // UP
         playeryv = -movespeed;
     }
-    else if (40 in keysDown) { // DOWN
+    else if (keys.down in keysDown) { // DOWN
         playeryv = movespeed;
     }
     else
         playeryv = 0;
-    if (39 in keysDown) { // RIGHT
+    if (keys.right in keysDown) { // RIGHT
         playerxv = movespeed;
     }
-    else if (37 in keysDown) { // LEFT
+    else if (keys.left in keysDown) { // LEFT
         playerxv = -movespeed;
     }
     else
