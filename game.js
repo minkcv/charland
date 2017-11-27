@@ -87,7 +87,7 @@ var playerw = tileWidth;
 var playerh = tileHeight - 1;
 var playerx = Math.floor(window.innerWidth / 2);
 var playery = Math.floor(window.innerHeight / 2) + 3;
-var movespeed = 3;
+var movespeed;
 
 // Rectangle intersection check.
 function intersects(r1, r2) {
@@ -206,7 +206,7 @@ function collisionDetection() {
     }
 }
 
-var keys = { up: 38, down: 40, right: 39, left: 37 };
+var keys = { up: 38, down: 40, right: 39, left: 37, shift: 16 };
 
 addEventListener("keydown", function(e) {
     if (e.keyCode in keys)
@@ -227,6 +227,10 @@ addEventListener("resize", function() {
 });
 
 setInterval(function() {
+    if (keys.shift in keysDown)
+        movespeed = 6;
+    else
+        movespeed = 3;
     if (keys.up in keysDown) { // UP
         playeryv = -movespeed;
     }
